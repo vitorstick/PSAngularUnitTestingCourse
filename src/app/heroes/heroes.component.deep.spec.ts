@@ -1,10 +1,10 @@
-import { HeroesComponent } from "./heroes.component";
-import { TestBed, ComponentFixture } from "@angular/core/testing";
-import { HeroService } from "../hero.service";
-import { HeroComponent } from "../hero/hero.component";
-import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { of } from "rxjs";
-import { By } from "@angular/platform-browser";
+import { HeroesComponent } from './heroes.component';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { HeroService } from '../hero.service';
+import { HeroComponent } from '../hero/hero.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 describe('HeroesComponent (Deep test)', () => {
   let fixture: ComponentFixture<HeroesComponent>;
@@ -16,18 +16,13 @@ describe('HeroesComponent (Deep test)', () => {
     HEROES = [
       { id: 11, name: 'Mr. Nice', strength: 10 },
       { id: 12, name: 'Narco', strength: 5 },
-      { id: 13, name: 'Bombasto', strength: 8 }
+      { id: 13, name: 'Bombasto', strength: 8 },
     ];
 
     TestBed.configureTestingModule({
-      declarations: [
-        HeroesComponent,
-        HeroComponent
-      ],
-      providers: [
-        {provide: HeroService, useValue: mockHeroService}
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
+      declarations: [HeroesComponent, HeroComponent],
+      providers: [{ provide: HeroService, useValue: mockHeroService }],
+      schemas: [NO_ERRORS_SCHEMA],
     });
     fixture = TestBed.createComponent(HeroesComponent);
   });
@@ -81,6 +76,5 @@ describe('HeroesComponent (Deep test)', () => {
     const heroText = fixture.debugElement.query(By.css('ul')).nativeElement.textContent;
 
     expect(heroText).toContain(name);
-
   });
 });
