@@ -2,9 +2,24 @@ import { HeroesComponent } from './heroes.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { HeroService } from '../hero.service';
 import { HeroComponent } from '../hero/hero.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Directive, Input } from '@angular/core';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+
+@Directive({
+  // tslint:disable-next-line: directive-selector
+  selector: '[routerLink]',
+  host: { '(click)': 'onClick()' },
+})
+// tslint:disable-next-line: directive-class-suffix
+export class RouterLinkDirectiveStub {
+  @Input('routerLink') linkParams: any;
+  navigateTo: any = null;
+
+  onClick() {
+    this.navigateTo = this.linkParams;
+  }
+}
 
 describe('HeroesComponent (Deep test)', () => {
   let fixture: ComponentFixture<HeroesComponent>;
@@ -20,9 +35,9 @@ describe('HeroesComponent (Deep test)', () => {
     ];
 
     TestBed.configureTestingModule({
-      declarations: [HeroesComponent, HeroComponent],
+      declarations: [HeroesComponent, HeroComponent, RouterLinkDirectiveStub],
       providers: [{ provide: HeroService, useValue: mockHeroService }],
-      schemas: [NO_ERRORS_SCHEMA],
+      // schemas: [NO_ERRORS_SCHEMA],
     });
     fixture = TestBed.createComponent(HeroesComponent);
   });
