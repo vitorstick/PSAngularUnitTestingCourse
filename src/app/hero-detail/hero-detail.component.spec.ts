@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync, tick, flush } from '@angular/core/testing';
 import { Location } from '@angular/common';
 import { HeroDetailComponent } from './hero-detail.component';
 import { HeroService } from '../hero.service';
@@ -47,4 +47,18 @@ describe('HeroDetailComponent', () => {
 
     expect(fixture.nativeElement.querySelector('h2').textContent).toContain(HERO.name.toUpperCase());
   });
+
+  it('should call update hero when save is called', fakeAsync(() => {
+    mockHeroService.updateHero.and.returnValue(of({}));
+    fixture.detectChanges();
+
+    fixture.componentInstance.save();
+    // to async wait 250
+    // tick(250);
+
+    // to make zone run all pending actions
+    flush();
+
+    expect(mockHeroService.updateHero).toHaveBeenCalled();
+  }));
 });
