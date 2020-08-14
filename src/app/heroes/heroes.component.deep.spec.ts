@@ -89,7 +89,20 @@ describe('HeroesComponent (Deep test)', () => {
 
     // GET THE NAME LIST FROM THE HTML
     const heroText = fixture.debugElement.query(By.css('ul')).nativeElement.textContent;
-
     expect(heroText).toContain(name);
+  });
+
+  it('should have the correct route for the first hero', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    fixture.detectChanges();
+    const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent));
+
+    const routerLink = heroComponents[0]
+      .query(By.directive(RouterLinkDirectiveStub))
+      .injector.get(RouterLinkDirectiveStub);
+
+    heroComponents[0].query(By.css('a')).triggerEventHandler('click', null);
+
+    expect(routerLink.navigateTo).toBe('/detail/11');
   });
 });
