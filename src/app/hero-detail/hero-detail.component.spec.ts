@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, fakeAsync, tick, flush } from '@angular/core/testing';
+import { TestBed, ComponentFixture, fakeAsync, tick, flush, async } from '@angular/core/testing';
 import { Location } from '@angular/common';
 import { HeroDetailComponent } from './hero-detail.component';
 import { HeroService } from '../hero.service';
@@ -60,5 +60,16 @@ describe('HeroDetailComponent', () => {
     flush();
 
     expect(mockHeroService.updateHero).toHaveBeenCalled();
+  }));
+
+  it('should call update hero when save is called but using promises', async(() => {
+    mockHeroService.updateHero.and.returnValue(of({}));
+    fixture.detectChanges();
+
+    fixture.componentInstance.saveWithPromise();
+
+    fixture.whenStable().then(() => {
+      expect(mockHeroService.updateHero).toHaveBeenCalled();
+    });
   }));
 });

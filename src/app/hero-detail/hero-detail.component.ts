@@ -28,6 +28,16 @@ export class HeroDetailComponent implements OnInit {
     this.location.back();
   }
 
+  // FOR TESTING PROMISE
+  saveWithPromise(): void {
+    const p = new Promise((resolve) => {
+      this.heroService.updateHero(this.hero).subscribe(() => {
+        this.goBack();
+        resolve();
+      });
+    });
+  }
+
   save(): void {
     // used timeout, because debounce didn't work
     setTimeout(() => {
